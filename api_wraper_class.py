@@ -42,7 +42,7 @@ class AnimalsAPIService:
 
 def main():
     api = AnimalsAPIService()
-    animal_name = "Lion"
+    animal_name = input("Animal name: ")
     animals = api.get_animals_by_name(animal_name)
 
     for animal in animals:
@@ -50,8 +50,11 @@ def main():
         print("Locations:", ", ".join(animal.locations))
         print("Characteristics:")
         print("Lifespan:", animal.characteristics.get("lifespan", "Unknown"))
+        print("Slogan:", animal.characteristics.get("slogan", "Unknown"))
+        print("Distinctive Feature:", animal.characteristics.get("most_distinctive_feature", "Unknown"))
+        print("Top Speed:", animal.characteristics.get("top_speed", "Unknown"))
         print("Weight:", animal.characteristics.get("weight", "Unknown"))
-        print("Diet:", animal.characteristics.get("diet", "Unknown"))
+        print("Diet:", animal.characteristics.get("top_speed", "Unknown"))
         print()
 
 
