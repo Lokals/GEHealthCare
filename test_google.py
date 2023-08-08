@@ -10,7 +10,6 @@ from selenium.webdriver.support import expected_conditions as EC
 
 @pytest.fixture()
 def browser():
-
     driver = webdriver.Chrome()
     yield driver
     driver.quit()
@@ -30,19 +29,15 @@ def test_google_search(browser):
     amount_results = browser.find_element(By.ID, "result-stats").text
     num_results = int(amount_results.split()[1].replace(',', ''))
     search_results = browser.find_elements(By.XPATH, '//*[@id="rso"]/div[1]/div/div/div/div/div/div/div[1]/div/a/h3')
-    search_results1 = browser.find_elements(By.XPATH, '//*[@id="rso"]/div[1]/div/div/table/tbody/tr[2]/td/div/h3/a')
-    search_results2 = browser.find_elements(By.XPATH, '//*[@id="rso"]/div[1]/div/div/table/tbody/tr[3]/td/div/h3/a')
-    search_results3 = browser.find_elements(By.XPATH, '//*[@id="rso"]/div[1]/div/div/table/tbody/tr[4]/td/div/h3/a')
-    search_results4 = browser.find_elements(By.XPATH, '//*[@id="rso"]/div[1]/div/div/table/tbody/tr[5]/td/div/h3/a')
+
+    link_elements = browser.find_elements(By.XPATH, '//a[@class="l"]')
+    links = [element.get_attribute('href') for element in link_elements]
 
     string = [result.text for result in search_results]
+    generate_json_report(links, string, num_results, search_query)
 
-    link = [result.get_attribute('href') for result in search_results1]
-    link2 = [result.get_attribute('href') for result in search_results2]
-    link3 = [result.get_attribute('href') for result in search_results3]
-    link4 = [result.get_attribute('href') for result in search_results4]
 
-    links = [link, link2, link3, link4]
+def generate_json_report(links: list, string: list, num_results: int, search_query: str):
     report = {
         'links': links,
         'first_search_result': string[0],
@@ -50,6 +45,5 @@ def test_google_search(browser):
         'num_results': num_results,
         'is_num_results_greater_than_1000': num_results > 1000,
     }
-
     with open('report.json', 'w') as f:
         json.dump(report, f, indent=4)

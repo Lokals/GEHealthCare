@@ -26,7 +26,7 @@ class AnimalsAPIService:
             print(f"An error occurred while making the request: {e}")
             return []
 
-        if not response.text:  # If the response is empty, return an empty list
+        if not response.text:
             print("Empty response received from the API.")
             return []
 
@@ -48,13 +48,18 @@ def main():
     for animal in animals:
         print("Name:", animal.name)
         print("Locations:", ", ".join(animal.locations))
+        print("Taxonomy:")
+        print("Kingdom:", animal.taxonomy.get("kingdom", "Unknown"))
+        print("Phylum:", animal.taxonomy.get("phylum", "Unknown"))
+        print("Order:", animal.taxonomy.get("order", "Unknown"))
+        print("Scientific Name:", animal.taxonomy.get("scientific_name", "Unknown"))
         print("Characteristics:")
         print("Lifespan:", animal.characteristics.get("lifespan", "Unknown"))
         print("Slogan:", animal.characteristics.get("slogan", "Unknown"))
         print("Distinctive Feature:", animal.characteristics.get("most_distinctive_feature", "Unknown"))
         print("Top Speed:", animal.characteristics.get("top_speed", "Unknown"))
         print("Weight:", animal.characteristics.get("weight", "Unknown"))
-        print("Diet:", animal.characteristics.get("top_speed", "Unknown"))
+        print("Diet:", animal.characteristics.get("diet", "Unknown"))
         print()
 
 

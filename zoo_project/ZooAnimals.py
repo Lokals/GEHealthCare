@@ -19,7 +19,7 @@ class Catfish(Fish, Swimmer):
 class Otter(Mammal, Walker, Swimmer):
     pass
 
-
+#
 # if __name__ == '__main__':
 #     mouse = Mouse("Mouse", "Mammal")
 #     print(mouse.sound())
